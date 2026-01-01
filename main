@@ -1,121 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Jaydon & Jess</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fast redirect -->
+  <meta http-equiv="refresh" content="0; url=https://sayi.do/jaydonandjess" />
 
   <style>
     html, body {
+      height: 100%;
       margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
       background: #fdf8f4;
-    }
-
-    /* Fullscreen iframe */
-    #iframe-container {
-      position: fixed;
-      inset: 0;
-      background: #fdf8f4;
-    }
-
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    /* Fallback / error overlay */
-    #fallback {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
+      color: #333;
+      display: grid;
+      place-items: center;
       text-align: center;
-      background: #fdf8f4;
-      z-index: 10;
-      padding: 30px;
     }
-
-    .fallback-box {
+    .card {
       background: white;
       padding: 40px;
-      max-width: 420px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      max-width: 440px;
+      margin: 20px;
     }
-
-    .fallback-box h1 {
-      margin-top: 0;
-      font-size: 1.6rem;
-    }
-
-    .fallback-box p {
-      color: #555;
-      margin-bottom: 25px;
-    }
-
-    .fallback-box a {
+    h1 { margin: 0 0 10px 0; font-size: 1.6rem; }
+    p { margin: 0 0 20px 0; color: #555; }
+    a.btn {
       display: inline-block;
-      padding: 12px 22px;
+      padding: 12px 20px;
       background: #b76e79;
       color: white;
       text-decoration: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-weight: 600;
     }
-
-    .fallback-box a:hover {
-      filter: brightness(0.95);
+    a.btn:hover { filter: brightness(0.95); }
+    .tiny {
+      margin-top: 14px;
+      font-size: 0.85rem;
+      color: #777;
     }
   </style>
 </head>
 <body>
+  <div class="card">
+    <h1>Redirecting…</h1>
+    <p>Taking you to Jaydon & Jess’ wedding website.</p>
 
-  <div id="iframe-container">
-    <iframe
-      id="weddingFrame"
-      src="https://sayi.do/jaydonandjess"
-      loading="lazy"
-      referrerpolicy="no-referrer"
-    ></iframe>
-  </div>
+    <a class="btn" href="https://sayi.do/jaydonandjess">
+      Click here if you’re not redirected
+    </a>
 
-  <div id="fallback">
-    <div class="fallback-box">
-      <h1>Just a moment…</h1>
-      <p>
-        If the page hasn’t loaded properly, you can continue directly to our
-        wedding site below.
-      </p>
-      <a href="https://sayi.do/jaydonandjess">
-        Click here to continue
-      </a>
-    </div>
+    <div class="tiny" id="countdown"></div>
   </div>
 
   <script>
-    const iframe = document.getElementById("weddingFrame");
-    const fallback = document.getElementById("fallback");
+    const target = "https://sayi.do/jaydonandjess";
 
-    // Show fallback if iframe doesn't load within X seconds
-    const LOAD_TIMEOUT_MS = 6000;
+    // JS redirect (some browsers ignore meta refresh in certain cases)
+    window.location.replace(target);
 
-    const timeout = setTimeout(() => {
-      fallback.style.display = "flex";
-    }, LOAD_TIMEOUT_MS);
-
-    iframe.addEventListener("load", () => {
-      clearTimeout(timeout);
-    });
-
-    iframe.addEventListener("error", () => {
-      fallback.style.display = "flex";
-    });
+    // Optional: countdown text (useful if redirects are blocked)
+    let seconds = 3;
+    const el = document.getElementById("countdown");
+    const timer = setInterval(() => {
+      el.textContent = `If nothing happens, use the button above. (${seconds}s)`;
+      seconds--;
+      if (seconds < 0) clearInterval(timer);
+    }, 1000);
   </script>
-
 </body>
 </html>
